@@ -1,0 +1,19 @@
+// 1. บอกว่าเราจะใช้ Prisma Client สำหรับเชื่อมต่อกับ JavaScript
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 2. บอกว่า Database ของเราคือ SQLite และดึงที่อยู่ไฟล์มาจากไฟล์ .env
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// สร้างตารางชื่อ Trainee เพื่อเก็บข้อมูลผู้เข้าอบรม
+model Trainee {
+  id         Int      @id @default(autoincrement()) // รหัสรันอัตโนมัติ (1, 2, 3...)
+  name       String   // ชื่อ-นามสกุล (ข้อความ)
+  attendance Int      // เปอร์เซ็นต์การเข้าร่วม (ตัวเลข)
+  status     String   @default("Normal") // สถานะ เช่น Normal, Passed, Blacklisted
+  createdAt  DateTime @default(now()) // บันทึกเวลาที่ลงทะเบียนอัตโนมัติ
+}
